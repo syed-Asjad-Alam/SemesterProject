@@ -3,7 +3,7 @@ import { Image, Text, TextInput, TouchableOpacity, View ,StyleSheet} from 'react
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     const [email,setEmail] = React.useState('')
     const [password,setPassword] = React.useState('')
     return (
@@ -37,7 +37,8 @@ const LoginScreen = () => {
               autoCapitalize="none"
           />
           <TouchableOpacity
-              style={styles.button}>
+              style={styles.button}
+              onPress = {() => navigation.navigate('MyDrawer')}>
               {/* onPress={() => onLoginPress()} */}
               <Text style={styles.buttonTitle}>Log in</Text>
           </TouchableOpacity>
