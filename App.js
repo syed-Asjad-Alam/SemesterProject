@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,Button } from 'react-native';
-import { LoginScreen, HomeScreen } from './src/screens'
+import { LoginScreen, HomeScreen, CategoriesScreen
+,UsersScreen, ProductsScreen, ReportsScreen,ReviewsScreen } from './src/screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import {
@@ -19,7 +20,7 @@ const App =() => {
     <NavigationContainer>
     <Stack.Navigator>
         <Stack.Screen options={{headerShown: false}} name = "LoginScreen" component = {LoginScreen} />
-        <Stack.Screen  name = "MyDrawer" component = {MyDrawer} />
+        <Stack.Screen options={{headerShown: false}} name = "Home" component = {MyDrawer} />
         
         
       </Stack.Navigator>
@@ -37,6 +38,11 @@ const MyDrawer = () => {
               }}
             >
               <Drawer.Screen name="HomeScreen"  component={HomeScreen} />
+              <Drawer.Screen name="UsersScreen"  component={UsersScreen} />
+              <Drawer.Screen name="ProductsScreen"  component={ProductsScreen} />
+              <Drawer.Screen name="ReportsScreen"  component={ReportsScreen} />
+              <Drawer.Screen name="ReviewsScreen"  component={ReviewsScreen} />
+              <Drawer.Screen name="CategoriesScreen"  component={CategoriesScreen} />
 
           </Drawer.Navigator>
   

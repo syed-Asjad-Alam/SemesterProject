@@ -38,7 +38,7 @@ const LoginScreen = ({navigation}) => {
           />
           <TouchableOpacity
               style={styles.button}
-              onPress = {() => navigation.navigate('MyDrawer')}>
+              onPress = {() => navigation.navigate('Home')}>
               {/* onPress={() => onLoginPress()} */}
               <Text style={styles.buttonTitle}>Log in</Text>
           </TouchableOpacity>

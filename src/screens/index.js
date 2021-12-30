@@ -1,2 +1,7 @@
 export { default as LoginScreen } from './LoginScreen'
 export { default as HomeScreen } from './HomeScreen'
+export { default as CategoriesScreen } from './CategoriesScreen'
+export { default as ProductsScreen } from './ProductsScreen'
+export { default as UsersScreen } from './UsersScreen'
+export { default as ReviewsScreen } from './ReviewsScreen'
+export { default as ReportsScreen } from './ReportsScreen'
