@@ -1,11 +1,30 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View ,StyleSheet} from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View ,StyleSheet, ActivityIndicator} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 const LoginScreen = ({navigation}) => {
+    const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     const [email,setEmail] = React.useState('')
     const [password,setPassword] = React.useState('')
+    const [loader, setLoader] = React.useState(false);
+
+    const onLoginPress = async() => {
+        setLoader(true)
+        const response = await fetch(`${FIREBASE_API_ENDPOINT}/admin.json`)
+        .then((response) => response.json()).then((data) => {
+            if (email == data.username && password == data.password) {
+                navigation.navigate('Home')
+            }
+            else {
+                alert("Invalid Credentials")
+            }
+            setLoader(false)
+
+        }
+        ).catch((error) => console.log(error))
+
+    }
     return (
       <View style={styles.container}>
           <Text style = {styles.title}>Admin Login</Text>
@@ -36,12 +55,16 @@ const LoginScreen = ({navigation}) => {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
           />
-          <TouchableOpacity
+          {loader == false ? ( <TouchableOpacity
               style={styles.button}
-              onPress = {() => navigation.navigate('Home')}>
-              {/* onPress={() => onLoginPress()} */}
+              onPress ={() => onLoginPress()}>
+              {/* onPress={() => onLoginPress()} 
+            {() => navigation.navigate('Home')*/}
               <Text style={styles.buttonTitle}>Log in</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>): (<TouchableOpacity style={styles.logBtn}>
+            <ActivityIndicator size="large" color="white" animating={loader} />
+          </TouchableOpacity>)}
+         
           <View style={styles.footerView}>
           {/* onPress={onFooterLinkPress} */}
               <Text style={styles.footerText}>Don't have an account? <Text  style={styles.footerLink}>Sign up</Text></Text>
@@ -112,7 +135,15 @@ footerLink: {
     color: "#788eec",
     fontWeight: "bold",
     fontSize: 16
-}
+},
+logBtn: {
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#788eec",
+    margin: 10,
+
+  }
 });
 
 export default LoginScreen
