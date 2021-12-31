@@ -3,6 +3,8 @@ import { Image, Text, TextInput, TouchableOpacity, View ,StyleSheet, ActivityInd
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
+
+
 const LoginScreen = ({navigation}) => {
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     const [email,setEmail] = React.useState('')
@@ -14,7 +16,7 @@ const LoginScreen = ({navigation}) => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/admin.json`)
         .then((response) => response.json()).then((data) => {
             if (email == data.username && password == data.password) {
-                navigation.navigate('Home')
+                console.log(data.username)
             }
             else {
                 alert("Invalid Credentials")
@@ -61,7 +63,7 @@ const LoginScreen = ({navigation}) => {
               {/* onPress={() => onLoginPress()} 
             {() => navigation.navigate('Home')*/}
               <Text style={styles.buttonTitle}>Log in</Text>
-          </TouchableOpacity>): (<TouchableOpacity style={styles.logBtn}>
+          </TouchableOpacity>): (<TouchableOpacity style={styles.button}>
             <ActivityIndicator size="large" color="white" animating={loader} />
           </TouchableOpacity>)}
          
@@ -137,13 +139,17 @@ footerLink: {
     fontSize: 16
 },
 logBtn: {
-    borderRadius: 20,
+    backgroundColor: '#788eec',
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 20,
+    height: 48,
+    borderRadius: 5,
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#788eec",
-    margin: 10,
+    justifyContent: 'center'
 
   }
 });
 
 export default LoginScreen
+

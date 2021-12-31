@@ -6,7 +6,6 @@ import {LinearGradient} from 'expo-linear-gradient'
 
 const HomeScreen = ({navigation}) => {
 
-
     return (
         <View>
             <LinearGradient  colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
@@ -37,6 +36,10 @@ const HomeScreen = ({navigation}) => {
                     <Text style={styles.upperText}>Categories</Text>
                     <Text style={styles.lowerText}> Manage Categories</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.singleButton} >
+                    <Text>Logout</Text>
+                </TouchableOpacity>
+
             </View>
             <View style={styles.bottomTab}>
                 <TouchableOpacity activeOpacity={0.8} onPress={() =>navigation.navigate('CategoriesScreen')}>

@@ -1,28 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
+import * as React from "react";
 import { StyleSheet, Text, View,Button } from 'react-native';
 import { LoginScreen, HomeScreen, CategoriesScreen
 ,UsersScreen, ProductsScreen, ReportsScreen,ReviewsScreen } from './src/screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
+  createDrawerNavigator
 } from '@react-navigation/drawer';
 
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()
 
+
+
+
+
+
+
 const App =() => {
+
+  
+
+
   return (
     <NavigationContainer>
     <Stack.Navigator>
         <Stack.Screen options={{headerShown: false}} name = "LoginScreen" component = {LoginScreen} />
-        <Stack.Screen options={{headerShown: false}} name = "Home" component = {MyDrawer} />
+        <Stack.Screen options={{headerShown: false}}  name = "Home" component = {MyDrawer}/>
         
         
+    
       </Stack.Navigator>
       </NavigationContainer>
   )
