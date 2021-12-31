@@ -1,4 +1,5 @@
 import {Image, View, TouchableOpacity, Text, StyleSheet } from "react-native"
+import {LinearGradient} from 'expo-linear-gradient'
 
 
 
@@ -8,6 +9,8 @@ const HomeScreen = ({navigation}) => {
 
     return (
         <View>
+            <LinearGradient  style={styles.lineargradient} colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+        end={{ x: 1, y: 0}}>
             <Text style = {styles.title}>Welcome back</Text>
             <View style={styles.buttonView}>
                 <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('UsersScreen')}>
@@ -42,6 +45,8 @@ const HomeScreen = ({navigation}) => {
             />
             </TouchableOpacity>
             </View>
+            </LinearGradient>
+
 
         </View>
     )
@@ -116,8 +121,8 @@ const styles = StyleSheet.create({
         position:'relative',
         top:42,
         flex:0
-
     }
+    
 
 })
 
