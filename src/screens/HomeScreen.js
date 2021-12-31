@@ -9,7 +9,7 @@ const HomeScreen = ({navigation}) => {
 
     return (
         <View>
-            <LinearGradient  style={styles.lineargradient} colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+            <LinearGradient  colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
         end={{ x: 1, y: 0}}>
             <Text style = {styles.title}>Welcome back</Text>
             <View style={styles.buttonView}>
