@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Card, Image, Chip, SearchBar, Avatar } from "react-native-elements";
 import * as React from "react";
+import {LinearGradient} from 'expo-linear-gradient'
 
 const ProductsScreen = ({ navigation }) => {
   const [products, setProducts] = React.useState([
@@ -71,14 +72,19 @@ const ProductsScreen = ({ navigation }) => {
   const keyExtractor = (item, index) => index.toString()
   return (
     <View style={styles.container}>
+        <LinearGradient  colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+        end={{ x: 1, y: 0}}>
       <SearchBar
         placeholder="Type Here..."
         placeholderTextColor='white'
         onChangeText={setSearch}
+        searchIcon={{color:'white'}}
         value={search}
-        inputContainerStyle={{ backgroundColor: "#788eec", borderWidth: 0 }}
+        inputContainerStyle={{ backgroundColor: "#788eec"}}
         containerStyle={{
           backgroundColor: "#788eec",
+          borderBottomColor:'transparent',
+          borderTopColor:'transparent'
         }}
       />
       <View style={styles.catWrapper}>
@@ -88,6 +94,8 @@ const ProductsScreen = ({ navigation }) => {
               type="outline"
               title={element}
               containerStyle={styles.chipContainer}
+              titleStyle={{color:'#788eec'}}
+              buttonStyle={{borderColor:'#788eec', borderWidth:1}}
             />
           ))}
         </ScrollView>
@@ -106,6 +114,7 @@ const ProductsScreen = ({ navigation }) => {
             />
           )}
       />
+      </LinearGradient>
     </View>
   );
 };
@@ -132,6 +141,7 @@ const styles = StyleSheet.create({
   catWrapper: {
     width: "100%",
     height: "10%",
+    
   },
   cardContainer: {
     width: "45%",
