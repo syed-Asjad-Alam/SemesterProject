@@ -32,14 +32,14 @@ const HomeScreen = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.singleButtonView}>
-                <TouchableOpacity style={styles.singleButton} onPress={() =>navigation.navigate('CategoriesScreen')}>
+                <TouchableOpacity style={styles.singleButton} onPress={() =>navigation.navigate('Category')}>
                     <Text style={styles.upperText}>Categories</Text>
                     <Text style={styles.lowerText}> Manage Categories</Text>
                 </TouchableOpacity>
 
             </View>
             <View style={styles.bottomTab}>
-                <TouchableOpacity activeOpacity={0.8} onPress={() =>navigation.navigate('CategoriesScreen')}>
+                <TouchableOpacity activeOpacity={0.8} onPress={() =>navigation.navigate('Category')}>
                 <Image style={styles.mainButton}
                 source={require('../../assets/MC1.png')}
             />

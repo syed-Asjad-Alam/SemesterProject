@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity,StyleSheet,TextInput,Button,Image } from "
 import * as ImagePicker from 'expo-image-picker';
 
 
-const AddCategory = () => {
+const AddCategory = ({navigation}) => {
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
 
     const [Categoryname, setCategoryname] = React.useState('')

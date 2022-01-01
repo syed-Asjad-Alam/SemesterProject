@@ -24,11 +24,11 @@ const CategoriesScreen = ({navigation}) => {
             </TouchableOpacity>
         </View>
         <View style={styles.buttonView}>
-            <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('ReportsScreen')}>
+            <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('UpdateCategory')}>
                 <Text style={styles.upperText}>Update</Text>
                 <Text style={styles.lowerText}>Update Category</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('ReviewsScreen')}>
+            <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('DeleteCategory')}>
                 <Text style={styles.upperText}>Delete</Text>
                 <Text style={styles.lowerText}>Delete Category</Text>
             </TouchableOpacity>
