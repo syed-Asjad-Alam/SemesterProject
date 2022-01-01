@@ -40,7 +40,7 @@ const HomeScreen = ({navigation}) => {
             </View>
             <View style={styles.bottomTab}>
                 <TouchableOpacity activeOpacity={0.8} onPress={() =>navigation.navigate('Category')}>
-                <Image style={styles.mainButton}
+                <Image  style={styles.mainButton}
                 source={require('../../assets/MC1.png')}
             />
             </TouchableOpacity>

@@ -24,7 +24,7 @@ const CategoriesScreen = ({navigation}) => {
             </TouchableOpacity>
         </View>
         <View style={styles.buttonView}>
-            <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('UpdateCategory')}>
+            <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('DrawerUpdate')}>
                 <Text style={styles.upperText}>Update</Text>
                 <Text style={styles.lowerText}>Update Category</Text>
             </TouchableOpacity>

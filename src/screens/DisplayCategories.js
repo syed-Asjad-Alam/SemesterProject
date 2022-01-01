@@ -7,6 +7,7 @@ import {
     TextInput,
     ScrollView,
     TouchableOpacityBase,
+    BackHandler, Alert
   } from "react-native";
   import { Input, ListItem } from "react-native-elements";
   
@@ -30,11 +31,12 @@ import {
         
     }
 
-    React.useEffect(() => filling())
+    React.useEffect(() => {
+      filling()
+    }, [])
 
 
     const filling = async() => {
-        console.log("render")
         const data = await getCategories()
         var catsids = []
         catsids = Object.getOwnPropertyNames(data)
@@ -53,8 +55,6 @@ import {
         <ScrollView showsVerticalScrollIndicator={false}>
           <CategorySelector
             list={list}
-            navigation={navigation}
-            navigateTo="Add Details"
           />
           {/* <TextInput placeholder="Enter Title" style={styles.fields} /> */}
         </ScrollView>

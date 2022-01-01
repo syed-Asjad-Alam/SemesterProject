@@ -33,7 +33,10 @@ const UpdateCategory = ({navigation}) => {
         
     }
 
-    React.useEffect(() => filling())
+    React.useEffect(() => {
+      filling()
+    
+    }, [])
 
 
     const filling = async() => {

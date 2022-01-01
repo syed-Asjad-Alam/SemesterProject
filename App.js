@@ -71,14 +71,31 @@ const DrawerforCategories = () => {
             <Drawer.Screen name="CategoriesScreen"  component={CategoriesScreen} />
             <Drawer.Screen name="AddCategory"  component={AddCategory} />
             <Drawer.Screen name="DisplayCategories"  component={DisplayCategories} />
-            <Drawer.Screen name="UpdateCategory"  component={UpdateCategory} />
-            <Drawer.Screen name="UpdatingCategory"  component={UpdatingCategory} />
+            <Drawer.Screen name="DrawerUpdate"  component={DrawerforUpdating} />
             <Drawer.Screen name="DeleteCategory"  component={DeleteCategory} />
          
 
       </Drawer.Navigator>
 
 )
+}
+const DrawerforUpdating = () =>{
+  return (
+  <Drawer.Navigator
+          initialRouteName='UpdateCategory'
+          screenOptions={{ 
+            drawerType: 'fade'
+          }}
+        >
+
+
+            <Drawer.Screen options={{headerShown: false}} name="UpdateCategory"  component={UpdateCategory} />
+            <Drawer.Screen options={{headerShown: false}} name="UpdatingCategory"  component={UpdatingCategory} />
+         
+
+      </Drawer.Navigator>
+  )
+
 }
 
 
