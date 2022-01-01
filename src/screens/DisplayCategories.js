@@ -17,13 +17,13 @@ import {
     
     const [list,setlist] = React.useState([])
 
-    const getData = async () => {
+    const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
         const data = await response.json();
         return data
         
     }
-    const getData1 = async (id) => {
+    const getCategory = async (id) => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`);
         const data = await response.json();
         return data.name
@@ -31,16 +31,20 @@ import {
     }
 
     React.useEffect(() => filling())
+
+
     const filling = async() => {
-        const data = await getData()
+        console.log("render")
+        const data = await getCategories()
         var catsids = []
         catsids = Object.getOwnPropertyNames(data)
-        var cats = await Promise.all(catsids.map(async(id) => await getData1(id)))
+        var cats = await Promise.all(catsids.map(async(id) => await getCategory(id)))
         // for (var i = 0 ; i < catsids.length; i++) {
         //    const data1 = await getData1(catsids[i])
         //    cats[i] = data1
         // }
         setlist(cats)
+        
        
     }
   
@@ -66,7 +70,6 @@ import {
             <ListItem.Content>
               <ListItem.Title>{item}</ListItem.Title>
             </ListItem.Content>
-              <ListItem.Chevron color="#0364ff" size={25} />
           </ListItem>
         ))}
       </View>

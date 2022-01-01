@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, Text, View,Button } from 'react-native';
 import { LoginScreen, HomeScreen, CategoriesScreen
 ,UsersScreen, ProductsScreen, ReportsScreen,ReviewsScreen, AddCategory 
-,UpdateCategory,DeleteCategory} from './src/screens'
+,UpdateCategory,DeleteCategory,UpdatingCategory} from './src/screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import {
@@ -72,6 +72,7 @@ const DrawerforCategories = () => {
             <Drawer.Screen name="AddCategory"  component={AddCategory} />
             <Drawer.Screen name="DisplayCategories"  component={DisplayCategories} />
             <Drawer.Screen name="UpdateCategory"  component={UpdateCategory} />
+            <Drawer.Screen name="UpdatingCategory"  component={UpdatingCategory} />
             <Drawer.Screen name="DeleteCategory"  component={DeleteCategory} />
          
 

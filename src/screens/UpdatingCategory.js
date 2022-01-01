@@ -3,28 +3,31 @@ import { View, Text, TouchableOpacity,StyleSheet,TextInput,Button,Image } from "
 import * as ImagePicker from 'expo-image-picker';
 
 
-const AddCategory = ({navigation}) => {
+const UpdatingCategory = ({navigation,route}) => {
 
+    const category = route.params.item
+    const catID = route.params.ID
    
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
 
-    const [Categoryname, setCategoryname] = React.useState("")
+    const [Categoryname, setCategoryname] = React.useState(category)
 
 
 
-    const AddCategory = () => {
-        var requestOptions = {
-          method: 'POST',
-          body: JSON.stringify({
-            name: Categoryname
-          }),
-        };
-    
-        fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`, requestOptions)
-          .then((response) => response.json())
-          .then((result) => console.log(result))
-          .catch((error) => console.log('error', error));
+    const UpdateCategory = () => {
+      const id = catID;
+      var requestOptions = {
+        method: 'PATCH',
+        body: JSON.stringify({
+          name:Categoryname
+        }),
       };
+  
+      fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => console.log(result))
+        .catch((error) => console.log('error', error));
+    };
     return (
         <View>
             <TextInput
@@ -38,8 +41,8 @@ const AddCategory = ({navigation}) => {
           />
           <TouchableOpacity
               style={styles.button}
-              onPress ={() => AddCategory()}>
-              <Text style={styles.buttonTitle}>Add</Text>
+              onPress ={() => UpdateCategory()}>
+              <Text style={styles.buttonTitle}>Update</Text>
           </TouchableOpacity>
           
         </View>
@@ -71,4 +74,4 @@ const styles = StyleSheet.create({
         },
     
 })
-export default AddCategory
+export default UpdatingCategory
