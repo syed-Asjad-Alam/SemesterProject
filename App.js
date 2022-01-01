@@ -1,12 +1,13 @@
 import * as React from "react";
 import { StyleSheet, Text, View,Button } from 'react-native';
 import { LoginScreen, HomeScreen, CategoriesScreen
-,UsersScreen, ProductsScreen, ReportsScreen,ReviewsScreen } from './src/screens'
+,UsersScreen, ProductsScreen, ReportsScreen,ReviewsScreen, AddCategory } from './src/screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   createDrawerNavigator
 } from '@react-navigation/drawer';
+import DisplayCategories from "./src/screens/DisplayCategories";
 
 
 const Drawer = createDrawerNavigator()
@@ -51,6 +52,8 @@ const MyDrawer = () => {
               <Drawer.Screen name="ReportsScreen"  component={ReportsScreen} />
               <Drawer.Screen name="ReviewsScreen"  component={ReviewsScreen} />
               <Drawer.Screen name="CategoriesScreen"  component={CategoriesScreen} />
+              <Drawer.Screen name="AddCategory"  component={AddCategory} />
+              <Drawer.Screen name="DisplayCategories"  component={DisplayCategories} />
 
           </Drawer.Navigator>
   

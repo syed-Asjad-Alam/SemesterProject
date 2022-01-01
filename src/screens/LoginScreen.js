@@ -16,7 +16,7 @@ const LoginScreen = ({navigation}) => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/admin.json`)
         .then((response) => response.json()).then((data) => {
             if (email == data.username && password == data.password) {
-                console.log(data.username)
+                navigation.navigate('Home')
             }
             else {
                 alert("Invalid Credentials")
