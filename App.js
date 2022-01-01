@@ -44,13 +44,22 @@ const MyDrawer = () => {
     
         <Drawer.Navigator
               initialRouteName='HomeScreen'
+              
               screenOptions={{ 
-                drawerType: 'fade'
+                drawerType:'slide',
+                headerStyle:{backgroundColor:'#788eec'},
+                headerTintColor:'white',
+                headerTitleStyle:{color:'white'}
+                
               }}
+              
             >
-              <Drawer.Screen name="HomeScreen"  component={HomeScreen} />
-              <Drawer.Screen name="UsersScreen"  component={UsersScreen} />
-              <Drawer.Screen name="ProductsScreen"  component={ProductsScreen} />
+              <Drawer.Screen options={{title:'Home',
+                headerStyle:{backgroundColor:'#788eec'},
+                headerTintColor:'white',
+                headerTitleStyle:{color:'white'}}} name="HomeScreen"  component={HomeScreen} />
+              <Drawer.Screen options={{title:'Users'}} name="UsersScreen"  component={UsersScreen} />
+              <Drawer.Screen options={{title:'Products'}} name="ProductsScreen"  component={ProductsScreen} />
               <Drawer.Screen name="ReportsScreen"  component={ReportsScreen} />
               <Drawer.Screen name="ReviewsScreen"  component={ReviewsScreen} />
 
@@ -64,15 +73,18 @@ const DrawerforCategories = () => {
     <Drawer.Navigator
           initialRouteName='CategoriesScreen'
           screenOptions={{ 
-            drawerType: 'fade'
+            drawerType: 'fade',
+            headerStyle:{backgroundColor:'#788eec'},
+            headerTintColor:'white',
+            headerTitleStyle:{color:'white'}
           }}
         >
 
-            <Drawer.Screen name="CategoriesScreen"  component={CategoriesScreen} />
-            <Drawer.Screen name="AddCategory"  component={AddCategory} />
-            <Drawer.Screen name="DisplayCategories"  component={DisplayCategories} />
-            <Drawer.Screen name="DrawerUpdate"  component={DrawerforUpdating} />
-            <Drawer.Screen name="DeleteCategory"  component={DeleteCategory} />
+            <Drawer.Screen options={{title:'Manage Categories'}} name="CategoriesScreen"  component={CategoriesScreen} />
+            <Drawer.Screen options={{title:'Categoires'}} name="DisplayCategories"  component={DisplayCategories} />
+            <Drawer.Screen options={{title:'Add'}} name="AddCategory"  component={AddCategory} />
+            <Drawer.Screen options={{title:'Update'}} name="DrawerUpdate"  component={DrawerforUpdating} />
+            <Drawer.Screen options={{title:'Delete'}} name="DeleteCategory"  component={DeleteCategory} />
          
 
       </Drawer.Navigator>
@@ -84,7 +96,10 @@ const DrawerforUpdating = () =>{
   <Drawer.Navigator
           initialRouteName='UpdateCategory'
           screenOptions={{ 
-            drawerType: 'fade'
+            drawerType: 'fade',
+            headerStyle:{backgroundColor:'#788eec'},
+            headerTintColor:'white',
+            headerTitleStyle:{color:'white'}
           }}
         >
 
@@ -105,7 +120,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
+  
 });
 
 

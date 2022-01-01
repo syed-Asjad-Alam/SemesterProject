@@ -76,13 +76,13 @@ const ProductsScreen = ({ navigation }) => {
         end={{ x: 1, y: 0}}>
       <SearchBar
         placeholder="Type Here..."
-        placeholderTextColor='white'
+        placeholderTextColor='#788eec'
         onChangeText={setSearch}
-        searchIcon={{color:'white'}}
+        searchIcon={{color:'#788eec'}}
         value={search}
-        inputContainerStyle={{ backgroundColor: "#788eec"}}
+        inputContainerStyle={{ backgroundColor: "white"}}
         containerStyle={{
-          backgroundColor: "#788eec",
+          backgroundColor: "white",
           borderBottomColor:'transparent',
           borderTopColor:'transparent'
         }}
