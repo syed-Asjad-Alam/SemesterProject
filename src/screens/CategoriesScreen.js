@@ -1,4 +1,4 @@
-import { View,  Text, StyleSheet,TouchableOpacity } from "react-native"
+import { View,  Text, StyleSheet,TouchableOpacity,Image } from "react-native"
 import {LinearGradient} from 'expo-linear-gradient'
 
 
@@ -32,6 +32,7 @@ const CategoriesScreen = ({navigation}) => {
                 <Text style={styles.upperText}>Delete</Text>
                 <Text style={styles.lowerText}>Delete Category</Text>
             </TouchableOpacity>
+            
         </View>
         </LinearGradient>
 
@@ -104,13 +105,6 @@ const styles = StyleSheet.create({
 
 
     },
-    bottomTab : {
-        backgroundColor:'#788eec',
-        position:'relative',
-        top:42,
-        flex:0
-    }
-    
 
 })
 

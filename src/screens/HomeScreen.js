@@ -1,5 +1,6 @@
 import {Image, View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import {LinearGradient} from 'expo-linear-gradient'
+import LottieView from 'lottie-react-native';
 
 
 
@@ -13,27 +14,42 @@ const HomeScreen = ({navigation}) => {
             <Text style = {styles.title}>Welcome back</Text>
             <View style={styles.buttonView}>
                 <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('UsersScreen')}>
-                    <Text style={styles.upperText}>Users</Text>
+                    <View style={styles.withanimation}>
+                        <Text style={styles.upperText}>Users</Text>
+                        <LottieView autoPlay style={{position:'relative',left:3}} source={require('../../assets/users.json')} />
+                    </View>
                     <Text style={styles.lowerText}>View Users</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('ProductsScreen')}>
-                    <Text style={styles.upperText}>Products</Text>
+                    <View style={styles.withanimation}>
+                        <Text style={styles.upperText}>Products</Text>
+                        <LottieView autoPlay style={{position:'relative',left:-13}} source={require('../../assets/products.json')} />
+                    </View>
                     <Text style={styles.lowerText}>View Products</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonView}>
                 <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('ReportsScreen')}>
-                    <Text style={styles.upperText}>Reports</Text>
+                <View style={styles.withanimation}>
+                        <Text style={styles.upperText}>Reports</Text>
+                        <LottieView autoPlay style={{position:'relative',left:-6}} source={require('../../assets/reports.json')} />
+                    </View>
                     <Text style={styles.lowerText}>View Reports</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('ReviewsScreen')}>
-                    <Text style={styles.upperText}>Reviews</Text>
+                <View style={styles.withanimation}>
+                        <Text style={styles.upperText}>Reviews</Text>
+                        <LottieView autoPlay style={{position:'relative',left:-7}} source={require('../../assets/reviews.json')} />
+                    </View>
                     <Text style={styles.lowerText}>View Reviews</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.singleButtonView}>
                 <TouchableOpacity style={styles.singleButton} onPress={() =>navigation.navigate('Category')}>
-                    <Text style={styles.upperText}>Categories</Text>
+                <View style={styles.withanimation}>
+                        <Text style={styles.upperText}>Categories</Text>
+                        <LottieView autoPlay style={{position:'relative',left:58}} source={require('../../assets/Categories.json')} />
+                    </View>
                     <Text style={styles.lowerText}> Manage Categories</Text>
                 </TouchableOpacity>
 
@@ -72,30 +88,30 @@ const styles = StyleSheet.create({
     },
     button: {
         borderColor:'#788eec',
-        borderWidth:2,
+        borderWidth:4,
         borderRadius:10,
         margin:10,
         width:140
     },
     upperText: {
-        backgroundColor:'#788eec',
-        color:'white',
+        color:'#788eec',
         fontWeight:'bold',
         fontSize:20,
         padding:13,
         justifyContent:'flex-start',
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5
+        
     },
     lowerText: {
-        backgroundColor:'white',
+
         padding:13,
+        paddingRight:-13,
         justifyContent:'center',
         fontSize:16,
         fontWeight:'bold',
+        color:'white',
+        backgroundColor:'#788eec',
         borderBottomLeftRadius: 5,
-        borderBottomRightRadius: 5,
-        color:'#788eec'
+        borderBottomRightRadius: 5
     },
     singleButtonView : {
         margin:10,
@@ -103,7 +119,7 @@ const styles = StyleSheet.create({
     },
     singleButton:{
         borderColor:'#788eec',
-        borderWidth:2,
+        borderWidth:4,
         borderRadius:10,
         margin:10
     },
@@ -121,6 +137,17 @@ const styles = StyleSheet.create({
         position:'relative',
         top:42,
         flex:0
+    },
+    withanimation:{
+        flexDirection:'row',
+         backgroundColor:'white',
+         borderTopLeftRadius: 5,
+        borderTopRightRadius: 5
+        
+    },
+    lottie:{
+        backgroundColor:'white',
+        height:50,width:50
     }
     
 
