@@ -8,20 +8,24 @@ import {
     ScrollView,
     TouchableOpacityBase,
     Image,
-    ActivityIndicator
+    ActivityIndicator,
+    RefreshControl
   } from "react-native";
   import { Input, ListItem,Avatar } from "react-native-elements";
   import {LinearGradient} from 'expo-linear-gradient'
 
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 
-
-const UpdateCategory = ({navigation}) => {
+const DeleteCategory = ({navigation}) => {
 
 
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     
     const [list,setlist] = React.useState([])
     const [loader,setloader] = React.useState(true)
+    const [refreshing, setRefreshing] = React.useState(false)
 
     const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -45,7 +49,7 @@ const UpdateCategory = ({navigation}) => {
           .then((response) => response.json())
           .then((result) => console.log('Delete Response:', result))
           .catch((error) => console.log('error', error));
-        setloader(true)
+        onRefresh
         filling()
       }
 
@@ -55,6 +59,11 @@ const UpdateCategory = ({navigation}) => {
         filling()
 
       }, [])
+      const onRefresh = React.useCallback(() => {
+        filling()
+        setRefreshing(true);
+        wait(1000).then(() => setRefreshing(false));
+      }, [])
 
 
     const filling = async() => {
@@ -63,7 +72,7 @@ const UpdateCategory = ({navigation}) => {
         var catsids = Object.keys(data)
         var cats = await Promise.all(catsids.map(async(id) => {
           let obj = await getCategory(id)
-          obj = {name:obj.name, image:`data:image/png;base64,${obj.image}`}
+          obj = {catID:id,name:obj.name, image:`data:image/png;base64,${obj.image}`}
           return obj
         }))
         setlist(cats)
@@ -83,7 +92,10 @@ const UpdateCategory = ({navigation}) => {
                               <ActivityIndicator style={styles.loading} size={100} color="#788eec" animating={loader} />
                             </View>
                           </View>
-                        </LinearGradient>):(<ScrollView showsVerticalScrollIndicator={false}>
+                        </LinearGradient>):(<ScrollView refreshControl={<RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />} showsVerticalScrollIndicator={false}>
           <CategorySelector
             list={list}
             deleteCategory={deleteCategory}
@@ -141,4 +153,4 @@ const UpdateCategory = ({navigation}) => {
     }
   });
 
-export default UpdateCategory
+export default DeleteCategory

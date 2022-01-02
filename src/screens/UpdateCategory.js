@@ -6,12 +6,14 @@ import {
     TouchableOpacity,
     TextInput,
     ScrollView,
-    TouchableOpacityBase,ActivityIndicator
+    TouchableOpacityBase,ActivityIndicator,RefreshControl
   } from "react-native";
   import { Input, ListItem,Avatar } from "react-native-elements";
   import {LinearGradient} from 'expo-linear-gradient'
 
-
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 
 
 const UpdateCategory = ({navigation}) => {
@@ -21,6 +23,7 @@ const UpdateCategory = ({navigation}) => {
     
     const [list,setlist] = React.useState([])
     const [loader,setloader] = React.useState(true)
+    const [refreshing, setRefreshing] = React.useState(false)
 
     const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -40,6 +43,11 @@ const UpdateCategory = ({navigation}) => {
       filling()
     
     }, [])
+    const onRefresh = React.useCallback(() => {
+      filling()
+      setRefreshing(true);
+      wait(1000).then(() => setRefreshing(false));
+    }, [])
 
 
     const filling = async() => {
@@ -48,7 +56,7 @@ const UpdateCategory = ({navigation}) => {
         var catsids = Object.keys(data)
         var cats = await Promise.all(catsids.map(async(id) => {
           let obj = await getCategory(id)
-          obj = {name:obj.name, image:`data:image/png;base64,${obj.image}`}
+          obj = {catID:id,name:obj.name, image:`data:image/png;base64,${obj.image}`}
           return obj
         }))
         setlist(cats)
@@ -68,8 +76,11 @@ const UpdateCategory = ({navigation}) => {
                               <ActivityIndicator style={styles.loading} size={100} color="#788eec" animating={loader} />
                             </View>
                           </View>
-                        </LinearGradient>): (<View><Text style = {styles.title}>Select Category</Text>
-        <ScrollView showsVerticalScrollIndicator={false}>
+                        </LinearGradient>): (<View>
+        <ScrollView refreshControl={<RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />} showsVerticalScrollIndicator={false}>
           <CategorySelector
             list={list}
             navigation={navigation}
@@ -88,6 +99,7 @@ const UpdateCategory = ({navigation}) => {
             <Avatar source={{uri: item.image}} />
             <ListItem.Content>
               <ListItem.Title>{item.name}</ListItem.Title>
+              
              
             </ListItem.Content>
             <TouchableOpacity onPress={() => props.navigation.navigate(props.navigateTo, {item: item.name,ID:item.catID})}>

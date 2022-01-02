@@ -60,17 +60,21 @@ const AddCategory = ({navigation}) => {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
           />
-          {image && (
+          {image ? (
               <View><Image
                 source={{ uri: image }}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 200, height: 200,alignSelf:'center' }}
               />
               <Text></Text>
               </View>
-            )}
+            ):<View><Image
+            source={{ uri: 'https://taj.im/wp-content/uploads/2016/02/default.jpg' }}
+            style={{ width: 200, height: 200, alignSelf:'center' }}
+          />
+          </View>}
           <TouchableOpacity style={styles.button} onPress={() => pickImage()}>
 
-          <Text>Insert Image</Text>
+          <Text style={styles.buttonTitle}>Insert Image</Text>
           </TouchableOpacity>
           <TouchableOpacity
               style={styles.button}
@@ -107,10 +111,12 @@ const styles = StyleSheet.create({
             alignItems: "center",
             justifyContent: 'center'
         },
-        imageBox: {
-    width: 300,
-    height: 300
-  }
+        
+  buttonTitle: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: "bold"
+},
     
 })
 export default AddCategory

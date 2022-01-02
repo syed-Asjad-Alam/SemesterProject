@@ -8,9 +8,13 @@ import {
     ScrollView,
     TouchableOpacityBase,
     BackHandler, Alert,ActivityIndicator,Image
+    ,RefreshControl
   } from "react-native";
   import { Input, ListItem,Avatar } from "react-native-elements";
   import {LinearGradient} from 'expo-linear-gradient'
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
   
   const DisplayCategories = ({ navigation }) => {
 
@@ -19,8 +23,8 @@ import {
     
     const [list,setlist] = React.useState([])
     const [loader,setloader] = React.useState(true)
-    // const[image,setimage] = React.useState(null)
-    // const[name,setname] = React.useState("")
+    const [refreshing, setRefreshing] = React.useState(false)
+    
 
     const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -38,6 +42,11 @@ import {
 
     React.useEffect(() => {
       filling()
+    }, [])
+    const onRefresh = React.useCallback(() => {
+      filling()
+      setRefreshing(true);
+      wait(1000).then(() => setRefreshing(false));
     }, [])
 
 
@@ -68,7 +77,10 @@ import {
                               <ActivityIndicator style={styles.loading} size={100} color="#788eec" animating={loader} />
                             </View>
                           </View>
-                        </LinearGradient>) : (<ScrollView showsVerticalScrollIndicator={false}>
+                        </LinearGradient>) : (<ScrollView refreshControl={<RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />} showsVerticalScrollIndicator={false}>
       <CategorySelector
         list={list}
       />

@@ -1,32 +1,79 @@
 import React from "react";
 import { View, Text, TouchableOpacity,StyleSheet,TextInput,Button,Image } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system'
 
 
 const UpdatingCategory = ({navigation,route}) => {
 
     const category = route.params.item
     const catID = route.params.ID
+
+
+    const getCategoryImage = async (id) => {
+      const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`);
+      const data = await response.json()
+      console.log(id)
+      
+      setImage(`data:image/png;base64,${data.image}`)
+      setloader(false)
+      
+    }
+    React.useEffect(async() => {
+      if (loader) {
+       await getCategoryImage(catID)
+      }
+    })
+  
+   
    
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
 
     const [Categoryname, setCategoryname] = React.useState(category)
+    
+    const [base64,setbase64] = React.useState()
+    const [loader,setloader] = React.useState(true)
+    const [image, setImage] = React.useState()
 
 
+
+    const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        quality: 1,
+      });
+  
+      if (!result.cancelled) {
+        const base64 = await FileSystem.readAsStringAsync(result.uri, { encoding: 'base64' })
+        setImage(result.uri);
+        setbase64(base64)
+        
+  
+        //console.log(image);
+      }
+    }
+  
 
     const UpdateCategory = () => {
       const id = catID;
       var requestOptions = {
         method: 'PATCH',
         body: JSON.stringify({
-          name:Categoryname
+          name:Categoryname,
+          image:base64
         }),
       };
+
+      
+    
   
       fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`, requestOptions)
         .then((response) => response.json())
         .then((result) => console.log(result))
         .catch((error) => console.log('error', error));
+
+
     };
     return (
         <View>
@@ -39,6 +86,22 @@ const UpdatingCategory = ({navigation,route}) => {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
           />
+           {image ? (
+              <View><Image
+                source={{ uri: image }}
+                style={{ width: 200, height: 200,alignSelf:'center' }}
+              />
+              <Text></Text>
+              </View>
+            ):<View><Image
+            source={{ uri: 'https://taj.im/wp-content/uploads/2016/02/default.jpg' }}
+            style={{ width: 200, height: 200, alignSelf:'center' }}
+          />
+          </View>}
+          <TouchableOpacity style={styles.button} onPress={() => pickImage()}>
+
+          <Text style={styles.buttonTitle}>Insert Image</Text>
+          </TouchableOpacity>
           <TouchableOpacity
               style={styles.button}
               onPress ={() => UpdateCategory()}>
@@ -72,6 +135,11 @@ const styles = StyleSheet.create({
             alignItems: "center",
             justifyContent: 'center'
         },
+        buttonTitle: {
+          color: 'white',
+          fontSize: 16,
+          fontWeight: "bold"
+      }
     
 })
 export default UpdatingCategory
