@@ -8,7 +8,7 @@ import {
     ScrollView,
     TouchableOpacityBase,ActivityIndicator
   } from "react-native";
-  import { Input, ListItem } from "react-native-elements";
+  import { Input, ListItem,Avatar } from "react-native-elements";
   import {LinearGradient} from 'expo-linear-gradient'
 
 
@@ -28,10 +28,11 @@ const UpdateCategory = ({navigation}) => {
         return data
         
     }
-    const getCategoryname = async (id) => {
+    
+    const getCategory = async (id) => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`);
         const data = await response.json();
-        return {catID:id,name:data.name}
+        return {catID:id,name:data.name,image:data.image}
         
     }
 
@@ -44,9 +45,12 @@ const UpdateCategory = ({navigation}) => {
     const filling = async() => {
         console.log("render")
         const data = await getCategories()
-        var catsids = []
-        catsids = Object.getOwnPropertyNames(data)
-        var cats = await Promise.all(catsids.map(async(id) => await getCategoryname(id)))
+        var catsids = Object.keys(data)
+        var cats = await Promise.all(catsids.map(async(id) => {
+          let obj = await getCategory(id)
+          obj = {name:obj.name, image:`data:image/png;base64,${obj.image}`}
+          return obj
+        }))
         setlist(cats)
         setloader(false)
 
@@ -81,6 +85,7 @@ const UpdateCategory = ({navigation}) => {
       <View>
         {props.list.map((item, i) => (
           <ListItem key={i} bottomDivider>
+            <Avatar source={{uri: item.image}} />
             <ListItem.Content>
               <ListItem.Title>{item.name}</ListItem.Title>
              

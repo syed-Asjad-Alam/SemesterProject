@@ -113,8 +113,8 @@ const ProductsScreen = ({ navigation }) => {
               type="outline"
               title={element}
               containerStyle={styles.chipContainer}
-              titleStyle={{color:'#788eec'}}
-              buttonStyle={{borderColor:'#788eec', borderWidth:1}}
+              titleStyle={{color:'white'}}
+              buttonStyle={{backgroundColor:'#788eec',borderColor:'#788eec', borderWidth:1}}
             />
           ))}
         </ScrollView>
