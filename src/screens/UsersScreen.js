@@ -8,32 +8,26 @@ import {LinearGradient} from 'expo-linear-gradient'
 
 
 const UsersScreen = () => {
-    const [users,setusers] = React.useState([{
-        Name:"Syed Asjad Alam",
-        ProfilePic:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-    },
-    {
-        Name:"Aoun Mustafa",
-        ProfilePic:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-    },
-    {
-        Name:"Sani Us Nain",
-        ProfilePic:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-    },
-    {
-        Name:"Subyal Sidique",
-        ProfilePic:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-    },
-    {
-        Name:"Azam Khattak",
-        ProfilePic:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-    },
-    {
-        Name:"Naseer Ahmed",
-        ProfilePic:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-    }
 
-    ])
+    const getUsers = async () => {
+        // setRefresher(true);
+        let myArr = [];
+        const response = await fetch(`${FIREBASE_API_ENDPOINT}/users.json`);
+        const data = await response.json();
+        let keys=Object.keys(data)
+        for (let i in keys) {
+          let id=keys[i]
+          let myObj={Name:data[id].userName}
+            myArr.push(myObj)
+          }
+        setusers(myArr);
+      };
+      React.useEffect(() => {
+        getUsers();
+      }, []);
+
+    const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
+    const [users,setusers] = React.useState([])
 
     const keyExtractor = (item, index) => index.toString()
 
@@ -41,7 +35,7 @@ const UsersScreen = () => {
         
         <ListItem 
              bottomDivider>
-          <Avatar source={{uri: item.ProfilePic}} />
+          {/* <Avatar source={{uri: item.ProfilePic}} /> */}
           <ListItem.Content>
               <TouchableOpacity>
             <ListItem.Title>{item.Name}</ListItem.Title>

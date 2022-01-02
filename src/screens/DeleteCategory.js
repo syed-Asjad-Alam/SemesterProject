@@ -86,7 +86,6 @@ const UpdateCategory = ({navigation}) => {
           <ListItem key={i} bottomDivider>
             <ListItem.Content>
               <ListItem.Title>{item.name}</ListItem.Title>
-              <ListItem.Title>{item.catID}</ListItem.Title>
              
             </ListItem.Content>
             <TouchableOpacity onPress={async() => await props.deleteCategory(item.catID)}>
