@@ -7,9 +7,9 @@ import {
     TextInput,
     ScrollView,
     TouchableOpacityBase,
-    BackHandler, Alert,ActivityIndicator
+    BackHandler, Alert,ActivityIndicator,Image
   } from "react-native";
-  import { Input, ListItem } from "react-native-elements";
+  import { Input, ListItem,Avatar } from "react-native-elements";
   import {LinearGradient} from 'expo-linear-gradient'
   
   const DisplayCategories = ({ navigation }) => {
@@ -19,6 +19,8 @@ import {
     
     const [list,setlist] = React.useState([])
     const [loader,setloader] = React.useState(true)
+    // const[image,setimage] = React.useState(null)
+    // const[name,setname] = React.useState("")
 
     const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -29,7 +31,8 @@ import {
     const getCategory = async (id) => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`);
         const data = await response.json();
-        return data.name
+        const obj = {name:data.name,image:data.image}
+        return obj
         
     }
 
@@ -40,13 +43,15 @@ import {
 
     const filling = async() => {
         const data = await getCategories()
-        var catsids = []
-        catsids = Object.getOwnPropertyNames(data)
-        var cats = await Promise.all(catsids.map(async(id) => await getCategory(id)))
-        // for (var i = 0 ; i < catsids.length; i++) {
-        //    const data1 = await getData1(catsids[i])
-        //    cats[i] = data1
-        // }
+        let catsids = Object.keys(data)
+        var cats = await Promise.all(catsids.map(async(id) => {
+          let obj = await getCategory(id)
+          obj = {name:obj.name, image:`data:image/png;base64,${obj.image}`}
+          return obj
+        }))
+
+
+        
         setlist(cats)
         setloader(false)
         
@@ -67,8 +72,9 @@ import {
       <CategorySelector
         list={list}
       />
-      {/* <TextInput placeholder="Enter Title" style={styles.fields} /> */}
+
     </ScrollView>)}
+     
       </View>
     );
   };
@@ -78,8 +84,9 @@ import {
       <View>
         {props.list.map((item, i) => (
           <ListItem key={i} bottomDivider>
+            <Avatar source={{uri: item.image}} />
             <ListItem.Content>
-              <ListItem.Title>{item}</ListItem.Title>
+              <ListItem.Title>{item.name}</ListItem.Title>
             </ListItem.Content>
           </ListItem>
         ))}

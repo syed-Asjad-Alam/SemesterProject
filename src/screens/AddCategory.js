@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity,StyleSheet,TextInput,Button,Image } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system'
 
 
 const AddCategory = ({navigation}) => {
@@ -9,6 +10,28 @@ const AddCategory = ({navigation}) => {
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
 
     const [Categoryname, setCategoryname] = React.useState("")
+    const [image, setImage] = React.useState(null)
+    const [base64,setbase64] = React.useState()
+
+    const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        quality: 1,
+      });
+  
+      if (!result.cancelled) {
+        const base64 = await FileSystem.readAsStringAsync(result.uri, { encoding: 'base64' })
+        setImage(result.uri);
+        setbase64(base64)
+        
+  
+        //console.log(image);
+      }
+    }
+
+   
+
 
 
 
@@ -16,7 +39,8 @@ const AddCategory = ({navigation}) => {
         var requestOptions = {
           method: 'POST',
           body: JSON.stringify({
-            name: Categoryname
+            name: Categoryname,
+            image: base64
           }),
         };
     
@@ -36,11 +60,25 @@ const AddCategory = ({navigation}) => {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
           />
+          {image && (
+              <View><Image
+                source={{ uri: image }}
+                style={{ width: 200, height: 200 }}
+              />
+              <Text></Text>
+              </View>
+            )}
+          <TouchableOpacity style={styles.button} onPress={() => pickImage()}>
+
+          <Text>Insert Image</Text>
+          </TouchableOpacity>
           <TouchableOpacity
               style={styles.button}
               onPress ={() => AddCategory()}>
               <Text style={styles.buttonTitle}>Add</Text>
           </TouchableOpacity>
+          
+         
           
         </View>
     )
@@ -69,6 +107,10 @@ const styles = StyleSheet.create({
             alignItems: "center",
             justifyContent: 'center'
         },
+        imageBox: {
+    width: 300,
+    height: 300
+  }
     
 })
 export default AddCategory
