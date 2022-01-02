@@ -11,55 +11,62 @@ import * as React from "react";
 import {LinearGradient} from 'expo-linear-gradient'
 
 const ProductsScreen = ({ navigation }) => {
-  const [products, setProducts] = React.useState([
-    {
-      name: "Gaming PC",
-      img: "https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=680&q=80 ",
-      price: "Rs.45000",
-    },
 
-    {
-      name: "Graphics Card",
-      img: "https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=680&q=80 ",
-      price: "Rs.45000",
-    },
-    {
-      name: "Mouse Pad",
-      img: "https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=680&q=80 ",
-      price: "Rs.45000",
-    },
-    {
-      name: "RAM",
-      img: "https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=680&q=80 ",
-      price: "Rs.45000",
-    },
-    {
-      name: "SSD",
-      img: "https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=680&q=80 ",
-      price: "Rs.45000",
-    },
-    {
-      name: "Mouse",
-      img: "https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=680&q=80 ",
-      price: "Rs.45000",
-    },
-    {
-      name: "Gaming PC",
-      img: "https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=680&q=80 ",
-      price: "Rs.45000",
-    },
-  ]);
-  const [cat, setCat] = React.useState([
-    "RAM",
-    "Graphics Card",
-    "Monitor",
-    "Keyboard",
-    "Gaming Mouse",
-    "MotherBoards",
-    "Pre-Builds",
-    "RAM",
-  ]);
-  const [search, setSearch] = React.useState("");
+  const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
+
+  const [products, setProducts] = React.useState([])
+  const [list, setlist] = React.useState([])
+  const [search, setSearch] = React.useState("")
+
+  const getData = async () => {
+    // setRefresher(true);
+    let myArr = [];
+    const response = await fetch(`${FIREBASE_API_ENDPOINT}/ads.json`);
+    const data = await response.json();
+    let keys=Object.keys(data)
+    for (let i in keys) {
+      let id=keys[i]
+      let myObj={Title:data[id].Title,
+                Condition:data[id].Condition,
+                Category:data[id].Category,
+              Price:data[id].Price,
+              Description:data[id].Description,
+            postedBy:data[id].postedBy,
+        adID:id}
+        myArr.push(myObj)
+      }
+    setProducts(myArr);
+  };
+
+  const getCategories = async () => {
+    const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
+    const data = await response.json();
+    return data
+    
+  }
+  const getCategory = async (id) => {
+    const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`);
+    const data = await response.json();
+    return data.name
+    
+  }
+  const filling = async() => {
+    const data = await getCategories()
+    var catsids = []
+    catsids = Object.getOwnPropertyNames(data)
+    var cats = await Promise.all(catsids.map(async(id) => await getCategory(id)))
+    // for (var i = 0 ; i < catsids.length; i++) {
+    //    const data1 = await getData1(catsids[i])
+    //    cats[i] = data1
+    // }
+    setlist(cats)
+    
+   
+  }
+  React.useEffect(() => {
+    filling()
+    getData()
+  }, [])
 
   const searchResults = () => {
     return products.filter((element) => {
@@ -89,7 +96,8 @@ const ProductsScreen = ({ navigation }) => {
       />
       <View style={styles.catWrapper}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {cat.map((element, index) => (
+          {list.map((element, index) => 
+            (
             <Chip
               type="outline"
               title={element}
@@ -107,10 +115,10 @@ const ProductsScreen = ({ navigation }) => {
         data={search.length < 1 ? products : searchResults()}
         renderItem={({ item }) => (
             <ProductCard
-              name={item.name}
-              img={item.img}
-              price={item.price}
-              navigation={navigation}
+              Category={item.Category}
+              Condition={item.Condition}
+              Description={item.Description}
+              Price={item.Price}
             />
           )}
       />
@@ -121,15 +129,18 @@ const ProductsScreen = ({ navigation }) => {
 const ProductCard = (props) => {
   return (
     <Card containerStyle={styles.cardContainer}>
-      <Image
+      {/* <Image
         style={styles.cardImage}
         resizeMode="cover"
         source={{ uri: props.img }}
         onPress={() => props.navigation.navigate("Login")}
-      />
+      /> */}
       <View style={styles.cardBottomWrapper}>
-        <Text style={styles.cardTitle}>{props.name}</Text>
-        <Text style={styles.priceText}>{props.price}</Text>
+        <Text style={styles.cardTitle}>{props.Category}</Text>
+        <Text style={styles.priceText}>{props.Condition}</Text>
+        <Text style={styles.priceText}>{props.Description}</Text>
+        <Text style={styles.priceText}>{props.Price}</Text>
+        <Text style={styles.priceText}>{props.Title}</Text>
       </View>
     </Card>
   );
