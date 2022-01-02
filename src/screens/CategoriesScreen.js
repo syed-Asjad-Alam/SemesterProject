@@ -1,5 +1,6 @@
 import { View,  Text, StyleSheet,TouchableOpacity,Image } from "react-native"
 import {LinearGradient} from 'expo-linear-gradient'
+import LottieView from 'lottie-react-native';
 
 
 
@@ -12,7 +13,10 @@ const CategoriesScreen = ({navigation}) => {
         <View>
         <LinearGradient  colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
     end={{ x: 1, y: 0}}>
-        <Text style = {styles.title}>Options</Text>
+        <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+            <LottieView autoPlay style={{height:120,width:120,alignSelf:'center'}} source={require('../../assets/options.json')} />
+            <LottieView autoPlay style={{height:120,width:120,alignSelf:'center'}} source={require('../../assets/options.json')} />
+        </View>
         <View style={styles.buttonView}>
             <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('DisplayCategories')}>
                 <Text style={styles.upperText}>View</Text>
@@ -34,6 +38,12 @@ const CategoriesScreen = ({navigation}) => {
             </TouchableOpacity>
             
         </View>
+        
+        <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:48}}>
+            <LottieView autoPlay style={{height:120,width:120,alignSelf:'center'}} source={require('../../assets/options.json')} />
+            <LottieView autoPlay style={{height:120,width:120,alignSelf:'center'}} source={require('../../assets/options.json')} />
+        </View>
+
         </LinearGradient>
 
 
