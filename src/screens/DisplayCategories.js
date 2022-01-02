@@ -7,9 +7,10 @@ import {
     TextInput,
     ScrollView,
     TouchableOpacityBase,
-    BackHandler, Alert
+    BackHandler, Alert,ActivityIndicator
   } from "react-native";
   import { Input, ListItem } from "react-native-elements";
+  import {LinearGradient} from 'expo-linear-gradient'
   
   const DisplayCategories = ({ navigation }) => {
 
@@ -17,6 +18,7 @@ import {
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     
     const [list,setlist] = React.useState([])
+    const [loader,setloader] = React.useState(true)
 
     const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -46,18 +48,27 @@ import {
         //    cats[i] = data1
         // }
         setlist(cats)
+        setloader(false)
         
        
     }
+    
   
     return (
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <CategorySelector
-            list={list}
-          />
-          {/* <TextInput placeholder="Enter Title" style={styles.fields} /> */}
-        </ScrollView>
+        {loader ? ( <LinearGradient style={{flex:1}} colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+                    end={{ x: 1, y: 0}}>
+                          <View>
+                            <View>
+                              <ActivityIndicator style={styles.loading} size={100} color="#788eec" animating={loader} />
+                            </View>
+                          </View>
+                        </LinearGradient>) : (<ScrollView showsVerticalScrollIndicator={false}>
+      <CategorySelector
+        list={list}
+      />
+      {/* <TextInput placeholder="Enter Title" style={styles.fields} /> */}
+    </ScrollView>)}
       </View>
     );
   };
@@ -82,5 +93,10 @@ import {
       //justifyContent: "center",
       //alignItems: "center",
     },
+    loading:{
+      position:'relative',
+      top:200
+    }
+
   });
   export default DisplayCategories;

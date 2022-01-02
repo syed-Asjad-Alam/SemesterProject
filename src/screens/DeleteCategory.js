@@ -7,10 +7,11 @@ import {
     TextInput,
     ScrollView,
     TouchableOpacityBase,
-    Image
+    Image,
+    ActivityIndicator
   } from "react-native";
   import { Input, ListItem } from "react-native-elements";
-
+  import {LinearGradient} from 'expo-linear-gradient'
 
 
 
@@ -20,6 +21,7 @@ const UpdateCategory = ({navigation}) => {
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     
     const [list,setlist] = React.useState([])
+    const [loader,setloader] = React.useState(true)
 
     const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -43,6 +45,7 @@ const UpdateCategory = ({navigation}) => {
           .then((response) => response.json())
           .then((result) => console.log('Delete Response:', result))
           .catch((error) => console.log('error', error));
+        setloader(true)
         filling()
       }
 
@@ -61,6 +64,7 @@ const UpdateCategory = ({navigation}) => {
         catsids = Object.getOwnPropertyNames(data)
         var cats = await Promise.all(catsids.map(async(id) => await getCategoryname(id)))
         setlist(cats)
+        setloader(false)
         
 
         
@@ -69,13 +73,20 @@ const UpdateCategory = ({navigation}) => {
   
     return (
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        {loader? (<LinearGradient style={{flex:1}} colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+                    end={{ x: 1, y: 0}}>
+                          <View>
+                            <View>
+                              <ActivityIndicator style={styles.loading} size={100} color="#788eec" animating={loader} />
+                            </View>
+                          </View>
+                        </LinearGradient>):(<ScrollView showsVerticalScrollIndicator={false}>
           <CategorySelector
             list={list}
             deleteCategory={deleteCategory}
           />
           {/* <TextInput placeholder="Enter Title" style={styles.fields} /> */}
-        </ScrollView>
+        </ScrollView>)}
       </View>
     );
   };
@@ -119,6 +130,10 @@ const UpdateCategory = ({navigation}) => {
     delicon: {
         height:30,
         width:30
+    },
+    loading:{
+      position:'relative',
+      top:200
     }
   });
 

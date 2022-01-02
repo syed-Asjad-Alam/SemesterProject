@@ -1,5 +1,5 @@
 import React from 'react'
-import { View,  Text, FlatList } from "react-native"
+import { View,  Text, FlatList ,ActivityIndicator,StyleSheet} from "react-native"
 import { ListItem, Avatar } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import {LinearGradient} from 'expo-linear-gradient'
@@ -21,13 +21,15 @@ const UsersScreen = () => {
             myArr.push(myObj)
           }
         setusers(myArr);
+        setloader(false)
       };
-      React.useEffect(() => {
+    React.useEffect(() => {
         getUsers();
       }, []);
 
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     const [users,setusers] = React.useState([])
+    const [loader,setloader] = React.useState(true)
 
     const keyExtractor = (item, index) => index.toString()
 
@@ -48,14 +50,32 @@ const UsersScreen = () => {
 
 
     return (
-        <View>
-            <FlatList
+        <View style = {styles.container}>
+
+            {loader ? ( <LinearGradient style={{flex:1}} colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+                    end={{ x: 1, y: 0}}>
+                          <View>
+                            <View>
+                              <ActivityIndicator style={styles.loading} size={100} color="#788eec" animating={loader} />
+                            </View>
+                          </View>
+                        </LinearGradient>):(<FlatList
                 keyExtractor={keyExtractor}
                 data={users}
                 renderItem={renderItem}
-                />
+                />)}
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  loading:{
+    position:'relative',
+    top:200
+  }
+})
 
 export default UsersScreen

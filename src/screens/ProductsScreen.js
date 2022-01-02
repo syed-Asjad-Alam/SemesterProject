@@ -5,6 +5,7 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  ActivityIndicator
 } from "react-native";
 import { Card, Image, Chip, SearchBar, Avatar } from "react-native-elements";
 import * as React from "react";
@@ -17,6 +18,8 @@ const ProductsScreen = ({ navigation }) => {
   const [products, setProducts] = React.useState([])
   const [list, setlist] = React.useState([])
   const [search, setSearch] = React.useState("")
+  const [loader,setloader] = React.useState(true)
+  
 
   const getData = async () => {
     // setRefresher(true);
@@ -35,7 +38,8 @@ const ProductsScreen = ({ navigation }) => {
         adID:id}
         myArr.push(myObj)
       }
-    setProducts(myArr);
+    setProducts(myArr)
+    setloader(false)
   };
 
   const getCategories = async () => {
@@ -79,7 +83,14 @@ const ProductsScreen = ({ navigation }) => {
   const keyExtractor = (item, index) => index.toString()
   return (
     <View style={styles.container}>
-        <LinearGradient  colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+        {loader ? ( <LinearGradient style={{flex:1}} colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+                    end={{ x: 1, y: 0}}>
+                          <View>
+                            <View>
+                              <ActivityIndicator style={styles.loading} size={100} color="#788eec" animating={loader} />
+                            </View>
+                          </View>
+                        </LinearGradient>):(<LinearGradient  colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
         end={{ x: 1, y: 0}}>
       <SearchBar
         placeholder="Type Here..."
@@ -122,7 +133,7 @@ const ProductsScreen = ({ navigation }) => {
             />
           )}
       />
-      </LinearGradient>
+      </LinearGradient>)}
     </View>
   );
 };
