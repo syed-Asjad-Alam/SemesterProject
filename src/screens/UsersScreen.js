@@ -1,6 +1,6 @@
 import React from 'react'
 import { View,  Text, FlatList ,ActivityIndicator,StyleSheet} from "react-native"
-import { ListItem, Avatar } from 'react-native-elements'
+import { ListItem, Avatar, Card } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import {LinearGradient} from 'expo-linear-gradient'
 
@@ -17,7 +17,7 @@ const UsersScreen = () => {
         let keys=Object.keys(data)
         for (let i in keys) {
           let id=keys[i]
-          let myObj={Name:data[id].userName}
+          let myObj={name:data[id].userName,email:data[id].emailID,cell:data[id].cell}
             myArr.push(myObj)
           }
         setusers(myArr);
@@ -33,20 +33,7 @@ const UsersScreen = () => {
 
     const keyExtractor = (item, index) => index.toString()
 
-    const renderItem = ({ item }) => (
-        
-        <ListItem 
-             bottomDivider>
-          {/* <Avatar source={{uri: item.ProfilePic}} /> */}
-          <ListItem.Content>
-              <TouchableOpacity>
-            <ListItem.Title>{item.Name}</ListItem.Title>
-            </TouchableOpacity>
-          </ListItem.Content>
-          <ListItem.Chevron />
-        
-        </ListItem>
-      )
+    
 
 
     return (
@@ -59,13 +46,54 @@ const UsersScreen = () => {
                               <ActivityIndicator style={styles.loading} size={100} color="#788eec" animating={loader} />
                             </View>
                           </View>
-                        </LinearGradient>):(<FlatList
+                        </LinearGradient>):(
+                             <LinearGradient style={{flex:1}} colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
+                             end={{ x: 1, y: 0}}>
+                        <FlatList
                 keyExtractor={keyExtractor}
                 data={users}
-                renderItem={renderItem}
-                />)}
+                renderItem={({ item }) => (
+                  
+                  <UserCard
+                    name = {item.name}
+                    email = {item.email}
+                    cell = {item.cell}
+                  
+                    
+                  
+                  />
+                )}
+                /></LinearGradient>)}
         </View>
     )
+}
+
+const UserCard = (props) => {
+  return (
+    
+    <Card containerStyle={{padding:'0%'}}>
+         <LinearGradient style={{flex:1}} colors={['#4568dc', '#b06ab3']} start={{ x: 0, y:0 }}
+                    end={{ x: 1, y: 0}}>
+      <View style={{padding:9}}>
+        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+          <Text style={styles.abovename}>User Name:</Text>
+          <Text style={styles.name}>{props.name}</Text>
+        </View>
+        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+          <Text style={styles.abovename}>Email:</Text>
+          <Text style={styles.name}>{props.email}</Text>
+        </View>
+        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+          <Text style={styles.abovename}>Cell:</Text>
+          <Text style={styles.name}>{props.cell}</Text>
+        </View>
+        
+        
+      </View>
+      </LinearGradient>
+    </Card>
+  )
+
 }
 
 const styles = StyleSheet.create({
@@ -75,7 +103,18 @@ const styles = StyleSheet.create({
   loading:{
     position:'relative',
     top:200
+  },
+  abovename : {
+    fontSize:18,
+    color:'white'
+    ,fontWeight:'bold'
+  },
+  name: {
+    fontSize:18,
+    color:'#D0D569'
+    ,fontWeight:'bold'
   }
+  
 })
 
 export default UsersScreen
