@@ -21,6 +21,7 @@ const UsersScreen = () => {
             myArr.push(myObj)
           }
         setusers(myArr);
+        console.log(users)
         setloader(false)
       };
     React.useEffect(() => {
@@ -63,7 +64,9 @@ const UsersScreen = () => {
                   
                   />
                 )}
-                /></LinearGradient>)}
+                /></LinearGradient>
+                )
+                }
         </View>
     )
 }
