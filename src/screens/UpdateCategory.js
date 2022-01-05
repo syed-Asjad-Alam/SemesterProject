@@ -24,6 +24,7 @@ const UpdateCategory = ({navigation}) => {
     const [list,setlist] = React.useState([])
     const [loader,setloader] = React.useState(true)
     const [refreshing, setRefreshing] = React.useState(false)
+    const [count, setCount] = React.useState(0);
 
     const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -40,6 +41,7 @@ const UpdateCategory = ({navigation}) => {
     }
 
     React.useEffect(() => {
+      console.log("nigga")
       filling()
     
     }, [])
@@ -98,13 +100,12 @@ const UpdateCategory = ({navigation}) => {
           <ListItem key={i} bottomDivider>
             <Avatar source={{uri: item.image}} />
             <ListItem.Content>
-              <ListItem.Title>{item.name}</ListItem.Title>
-              
-             
-            </ListItem.Content>
             <TouchableOpacity onPress={() => props.navigation.navigate(props.navigateTo, {item: item.name,ID:item.catID})}>
+              <ListItem.Title>{item.name}</ListItem.Title>
+              </TouchableOpacity>
+            </ListItem.Content>
             <ListItem.Chevron />
-            </TouchableOpacity>
+            
             
           </ListItem>
         ))}

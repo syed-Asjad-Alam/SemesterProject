@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = (props) => {
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     const [email,setEmail] = React.useState('')
     const [password,setPassword] = React.useState('')
@@ -16,7 +16,8 @@ const LoginScreen = ({navigation}) => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/admin.json`)
         .then((response) => response.json()).then((data) => {
             if (email == data.username && password == data.password) {
-                navigation.navigate('Home')
+                console.log("nigga")
+                props.setIsLoggedIn(true)
             }
             else {
                 alert("Invalid Credentials")
@@ -60,15 +61,12 @@ const LoginScreen = ({navigation}) => {
           {loader == false ? ( <TouchableOpacity
               style={styles.button}
               onPress ={() => onLoginPress()}>
-              {/* onPress={() => onLoginPress()} 
-            {() => navigation.navigate('Home')*/}
               <Text style={styles.buttonTitle}>Log in</Text>
           </TouchableOpacity>): (<TouchableOpacity style={styles.button}>
             <ActivityIndicator size="large" color="white" animating={loader} />
           </TouchableOpacity>)}
          
           <View style={styles.footerView}>
-          {/* onPress={onFooterLinkPress} */}
               <Text style={styles.footerText}>Don't have an account? <Text  style={styles.footerLink}>Sign up</Text></Text>
           </View>
       </KeyboardAwareScrollView>

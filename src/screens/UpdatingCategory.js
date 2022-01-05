@@ -2,6 +2,9 @@ import React from "react";
 import { View, Text, TouchableOpacity,StyleSheet,TextInput,Button,Image } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
+import { StackActions } from '@react-navigation/native';
+
+
 
 
 const UpdatingCategory = ({navigation,route}) => {
@@ -13,7 +16,6 @@ const UpdatingCategory = ({navigation,route}) => {
     const getCategoryImage = async (id) => {
       const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`);
       const data = await response.json()
-      console.log(id)
       
       setImage(`data:image/png;base64,${data.image}`)
       setloader(false)

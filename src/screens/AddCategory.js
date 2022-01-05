@@ -5,7 +5,7 @@ import * as FileSystem from 'expo-file-system'
 
 
 const AddCategory = ({navigation}) => {
-
+    
    
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
 
