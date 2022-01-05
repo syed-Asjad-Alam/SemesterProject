@@ -20,7 +20,6 @@ const ProductsScreen = ({ navigation }) => {
     const [search, setSearch] = React.useState("");
     const [catPressed, setcatPressed] = React.useState("All");
     const [loader, setLoader] = React.useState(true);
-    const [names,setnames] = React.useState([])
   
     const getCategories = async () => {
       const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -72,7 +71,6 @@ const ProductsScreen = ({ navigation }) => {
     getData();
     getCategories()
     
-    console.log(names)
   }, []);
 
   const searchResults = () => {
@@ -151,7 +149,6 @@ const ProductsScreen = ({ navigation }) => {
             ? searchResults()
             : searchResults()
         }
-        key={0}
         renderItem={({ item }) => (
           <ProductCard
             cat={item.Category}
