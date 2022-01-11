@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity,StyleSheet,TextInput,Image } from "react-native";
+import { View, Text, TouchableOpacity,StyleSheet,TextInput,Image, ToastAndroid } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
 
@@ -76,6 +76,7 @@ const UpdatingCategory = ({route}) => {
         .then((response) => response.json())
         .then((result) => console.log(result))
         .catch((error) => console.log('error', error));
+        ToastAndroid.show("Category Updated",ToastAndroid.SHORT)
 
 
     };

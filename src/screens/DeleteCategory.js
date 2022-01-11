@@ -6,7 +6,11 @@ import {
     ScrollView,
     Image,
     ActivityIndicator,
-    RefreshControl
+    RefreshControl,
+    Modal,
+    Pressable,
+    Text,
+    ToastAndroid
   } from "react-native";
   import { ListItem,Avatar } from "react-native-elements";
   import {LinearGradient} from 'expo-linear-gradient'
@@ -15,7 +19,7 @@ import {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
 
-const DeleteCategory = () => {
+const DeleteCategory = ({navigation}) => {
 
     //Declarations
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
@@ -23,6 +27,7 @@ const DeleteCategory = () => {
     const [list,setlist] = React.useState([])
     const [loader,setloader] = React.useState(true)
     const [refreshing, setRefreshing] = React.useState(false)
+    
 
 
     //Functions
@@ -65,6 +70,7 @@ const DeleteCategory = () => {
       }, [])
 
 
+
     const filling = async() => {
         const data = await getCategories()
         var catsids = Object.keys(data)
@@ -98,11 +104,13 @@ const DeleteCategory = () => {
             list={list}
             deleteCategory={deleteCategory}
           />
-        </ScrollView>)}
+        </ScrollView>
+        )}
       </View>
     );
   };
   const CategorySelector = (props) => {
+    
     return (
       <View>
         {props.list.map((item, i) => (
@@ -112,7 +120,12 @@ const DeleteCategory = () => {
               <ListItem.Title>{item.name}</ListItem.Title>
              
             </ListItem.Content>
-            <TouchableOpacity onPress={async() => await props.deleteCategory(item.catID)}>
+            
+            <TouchableOpacity onPress={async() => {
+                await props.deleteCategory(item.catID)
+                ToastAndroid.show('Category Deleted',ToastAndroid.SHORT)
+            }
+            }>
             <Image  style = {styles.delicon}
               source={require('../../assets/deleteicon.png')}
           />
@@ -145,7 +158,47 @@ const DeleteCategory = () => {
     loading:{
       position:'relative',
       top:200
-    }
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "#788eec",
+      borderRadius: 20,
+      borderWidth:2,
+      borderColor:'white',
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    button1: {
+      marginTop:30,
+      marginLeft:20,
+      marginRight:20,
+      borderRadius: 10,
+      padding: 10,
+      elevation: 2
+    },
+     buttonClose: {
+      backgroundColor: "white",
+    },
+    textStyle: {
+      color: "#788eec",
+      fontWeight: "bold",
+      textAlign: "center",
+      fontSize:16
+    },
   });
 
 export default DeleteCategory

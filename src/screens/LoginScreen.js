@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View ,StyleSheet, ActivityIndicator} from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View ,StyleSheet, ActivityIndicator,Modal,Pressable} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
@@ -11,6 +11,7 @@ const LoginScreen = (props) => {
     const [email,setEmail] = React.useState('')
     const [password,setPassword] = React.useState('')
     const [loader, setLoader] = React.useState(false);
+    const [modalVisible,setModalVisible] =React.useState(false)
     
     //Functions
     const onLoginPress = async() => {
@@ -21,7 +22,7 @@ const LoginScreen = (props) => {
                 props.setIsLoggedIn(true)
             }
             else {
-                alert("Invalid Credentials")
+                setModalVisible(true)
             }
             setLoader(false)
 
@@ -69,6 +70,29 @@ const LoginScreen = (props) => {
          
           
       </KeyboardAwareScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+          
+            <Text style={{fontWeight:'bold',color:'white',fontSize:16}}>Invalid Credentials</Text>
+          
+            <Pressable
+              style={[styles.button1, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)
+              }
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
   </View>
       )
 }
@@ -141,7 +165,45 @@ logBtn: {
     alignItems: "center",
     justifyContent: 'center'
 
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "#788eec",
+    borderRadius: 20,
+    borderWidth:2,
+    borderColor:'white',
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button1: {
+    marginTop:30,
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2
+  },
+   buttonClose: {
+    backgroundColor: "white",
+  },
+  textStyle: {
+    color: "#788eec",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize:16
+  },
 });
 
 export default LoginScreen
