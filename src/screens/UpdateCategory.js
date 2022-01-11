@@ -1,14 +1,12 @@
 import React from "react";
 import {
     StyleSheet,
-    Text,
     View,
     TouchableOpacity,
-    TextInput,
     ScrollView,
-    TouchableOpacityBase,ActivityIndicator,RefreshControl
+    ActivityIndicator,RefreshControl
   } from "react-native";
-  import { Input, ListItem,Avatar } from "react-native-elements";
+  import {ListItem,Avatar } from "react-native-elements";
   import {LinearGradient} from 'expo-linear-gradient'
 
   const wait = (timeout) => {
@@ -18,14 +16,14 @@ import {
 
 const UpdateCategory = ({navigation}) => {
 
-
+    //Declarations
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     
     const [list,setlist] = React.useState([])
     const [loader,setloader] = React.useState(true)
     const [refreshing, setRefreshing] = React.useState(false)
-    const [count, setCount] = React.useState(0);
-
+  
+    //Functions
     const getCategories = async () => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
         const data = await response.json();
@@ -41,7 +39,6 @@ const UpdateCategory = ({navigation}) => {
     }
 
     React.useEffect(() => {
-      console.log("nigga")
       filling()
     
     }, [])
@@ -53,7 +50,6 @@ const UpdateCategory = ({navigation}) => {
 
 
     const filling = async() => {
-        console.log("render")
         const data = await getCategories()
         var catsids = Object.keys(data)
         var cats = await Promise.all(catsids.map(async(id) => {

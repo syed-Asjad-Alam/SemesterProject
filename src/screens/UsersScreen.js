@@ -1,7 +1,6 @@
 import React from 'react'
 import { View,  Text, FlatList ,ActivityIndicator,StyleSheet} from "react-native"
-import { ListItem, Avatar, Card } from 'react-native-elements'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Card } from 'react-native-elements'
 import {LinearGradient} from 'expo-linear-gradient'
 
 
@@ -9,8 +8,16 @@ import {LinearGradient} from 'expo-linear-gradient'
 
 const UsersScreen = () => {
 
+  //Declarations
+  const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
+  const [users,setusers] = React.useState([])
+  const [loader,setloader] = React.useState(true)
+
+
+  //Functions
+  const keyExtractor = (item, index) => index.toString()
+
     const getUsers = async () => {
-        // setRefresher(true);
         let myArr = [];
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/users.json`);
         const data = await response.json();
@@ -21,19 +28,13 @@ const UsersScreen = () => {
             myArr.push(myObj)
           }
         setusers(myArr);
-        console.log(users)
         setloader(false)
       };
     React.useEffect(() => {
         getUsers();
       }, []);
 
-    const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
-    const [users,setusers] = React.useState([])
-    const [loader,setloader] = React.useState(true)
-
-    const keyExtractor = (item, index) => index.toString()
-
+    
     
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View ,StyleSheet, ActivityIndicator} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -6,17 +6,18 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
 const LoginScreen = (props) => {
+    //Declarations
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
     const [email,setEmail] = React.useState('')
     const [password,setPassword] = React.useState('')
     const [loader, setLoader] = React.useState(false);
-
+    
+    //Functions
     const onLoginPress = async() => {
         setLoader(true)
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/admin.json`)
         .then((response) => response.json()).then((data) => {
             if (email == data.username && password == data.password) {
-                console.log("nigga")
                 props.setIsLoggedIn(true)
             }
             else {
@@ -66,9 +67,7 @@ const LoginScreen = (props) => {
             <ActivityIndicator size="large" color="white" animating={loader} />
           </TouchableOpacity>)}
          
-          <View style={styles.footerView}>
-              <Text style={styles.footerText}>Don't have an account? <Text  style={styles.footerLink}>Sign up</Text></Text>
-          </View>
+          
       </KeyboardAwareScrollView>
   </View>
       )
@@ -122,11 +121,7 @@ buttonTitle: {
     fontSize: 16,
     fontWeight: "bold"
 },
-footerView: {
-    flex: 1,
-    alignItems: "center",
-    marginTop: 20
-},
+
 footerText: {
     fontSize: 16,
     color: '#2e2e2d'

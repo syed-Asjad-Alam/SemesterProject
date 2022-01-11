@@ -2,11 +2,9 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    ScrollView,
     FlatList,ActivityIndicator
   } from "react-native";
-  import { Card, Image, Chip, SearchBar, Avatar } from "react-native-elements";
+  import { Card, Image } from "react-native-elements";
   import * as React from "react";
   import {LinearGradient} from 'expo-linear-gradient'
 
@@ -14,11 +12,14 @@ import {
 
 const ReportsScreen = () => {
 
+    //Declarations
     const FIREBASE_API_ENDPOINT = "https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/";
     const [rproducts, setrProducts] = React.useState([]);
     const [loader, setLoader] = React.useState(true);
     
 
+
+    //Functions
     const getProduct = async (id) => {
         const response = await fetch(`${FIREBASE_API_ENDPOINT}/ads/${id}.json`);
         const data = await response.json();

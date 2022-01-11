@@ -1,20 +1,20 @@
 import React from "react";
-import { View, Text, TouchableOpacity,StyleSheet,TextInput,Button,Image } from "react-native";
+import { View, Text, TouchableOpacity,StyleSheet,TextInput,Image} from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
 
 
-const AddCategory = ({navigation}) => {
+const AddCategory = () => {
     
-   
+   //Declarations
     const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
 
     const [Categoryname, setCategoryname] = React.useState("")
     const [image, setImage] = React.useState(null)
     const [base64,setbase64] = React.useState()
 
+    //functions
     const pickImage = async () => {
-      // No permissions request is necessary for launching the image library
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         quality: 1,
@@ -25,17 +25,13 @@ const AddCategory = ({navigation}) => {
         setImage(result.uri);
         setbase64(base64)
         
-  
-        //console.log(image);
       }
     }
 
-   
+  
 
-
-
-
-    const AddCategory = () => {
+    const addCategoryInDB = () => {
+      if (Categoryname != "") {
         var requestOptions = {
           method: 'POST',
           body: JSON.stringify({
@@ -48,7 +44,11 @@ const AddCategory = ({navigation}) => {
           .then((response) => response.json())
           .then((result) => console.log(result))
           .catch((error) => console.log('error', error));
-      };
+      }
+      else{
+        alert("Please enter a category name")
+        }
+      }
     return (
         <View>
             <TextInput
@@ -78,7 +78,7 @@ const AddCategory = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
               style={styles.button}
-              onPress ={() => AddCategory()}>
+              onPress ={() => addCategoryInDB()}>
               <Text style={styles.buttonTitle}>Add</Text>
           </TouchableOpacity>
           

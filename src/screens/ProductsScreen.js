@@ -3,15 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   ScrollView,
   FlatList,ActivityIndicator
 } from "react-native";
-import { Card, Image, Chip, SearchBar, Avatar } from "react-native-elements";
+import { Card, Image, Chip, SearchBar } from "react-native-elements";
 import * as React from "react";
 import {LinearGradient} from 'expo-linear-gradient'
 
-const ProductsScreen = ({ navigation }) => {
+const ProductsScreen = () => {
+
+  //Declarations
   const FIREBASE_API_ENDPOINT =
     "https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
@@ -20,6 +21,8 @@ const ProductsScreen = ({ navigation }) => {
     const [search, setSearch] = React.useState("");
     const [catPressed, setcatPressed] = React.useState("All");
     const [loader, setLoader] = React.useState(true);
+
+    //Functions
   
     const getCategories = async () => {
       const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories.json`);
@@ -33,7 +36,7 @@ const ProductsScreen = ({ navigation }) => {
         myArr.push(myObj)
       }
       setCat(myArr)
-      setLoader(false)
+
   }
   const getUsername = async (id) => {
     const response = await fetch(`${FIREBASE_API_ENDPOINT}/users/${id}.json`);
@@ -65,6 +68,7 @@ const ProductsScreen = ({ navigation }) => {
         myArr.push(myObj)
       }
     setProducts(myArr);
+    setLoader(false)
   };
 
   React.useEffect(() => {
@@ -96,19 +100,7 @@ const ProductsScreen = ({ navigation }) => {
                           </View>
                         </LinearGradient>):(<LinearGradient style={{flex:1}} colors={['white', '#AED6F1']} start={{ x: 0, y:0 }}
           end={{ x: 1, y: 0}}>
-  <SearchBar
-        placeholder="Type Here..."
-        onChangeText={setSearch}
-        placeholderTextColor='#788eec'
-        value={search}
-        searchIcon={{color:'#788eec'}}
-        inputContainerStyle={{ backgroundColor: "white"}}
-        containerStyle={{
-          backgroundColor: "white",
-          borderBottomColor:'transparent',
-          borderTopColor:'transparent'
-        }}
-      />
+
       <View style={styles.catWrapper}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <Chip

@@ -93,46 +93,7 @@ const App =() => {
   )
 }
 
-// const MyDrawer = () => {
-//   return (
-    
-//         <Drawer.Navigator
-//               initialRouteName='HomeScreen'
-//               drawerContent={(props) => <CustomDrawerContent  {...props} />}
-//               screenOptions={{ 
-//                 drawerType:'slide',
-//                 headerStyle:{backgroundColor:'#788eec'},
-//                 headerTintColor:'white',
-//                 headerTitleStyle:{color:'white'}
-                
-//               }}
-              
-//             >
-              
-//               <Drawer.Screen options={{title:'Home',
-//                 headerStyle:{backgroundColor:'#788eec'},
-//                 headerTintColor:'white',
-//                 headerTitleStyle:{color:'white'}}} name="HomeScreen"  component={HomeScreen} />
-//               <Drawer.Screen options={{title:'Users'}} name="UsersScreen"  component={UsersScreen} />
-//               <Drawer.Screen options={{title:'Products'}} name="ProductsScreen"  component={ProductsScreen} />
-//               <Drawer.Screen options={{title:'Reports'}} name="ReportsScreen"  component={ReportsScreen} />
-//               <Drawer.Screen options={{title:'Reviews'}} name="ReviewsScreen"  component={ReviewsScreen} />
 
-//           </Drawer.Navigator>
-  
-//   )
-// }
-// const  CustomDrawerContent = (props) => {
-  
-//   return (
-//     <DrawerContentScrollView {...props}>
-//       <DrawerItemList {...props} />
-//       <DrawerItem
-//         label="Sign Out"
-//         setIsLoggedIn={setIsLoggedIn} />
-//     </DrawerContentScrollView>
-//   )
-// }
 const DrawerforCategories = () => {
   return (
     
@@ -147,7 +108,7 @@ const DrawerforCategories = () => {
         >
 
             <Drawer.Screen options={{title:'Manage Categories'}} name="CategoriesScreen"  component={CategoriesScreen} />
-            <Drawer.Screen options={{title:'Categoires'}} name="DisplayCategories"  component={DisplayCategories} />
+            <Drawer.Screen options={{title:'Categories'}} name="DisplayCategories"  component={DisplayCategories} />
             <Drawer.Screen options={{title:'Add'}} name="AddCategory"  component={AddCategory} />
             <Drawer.Screen options={{title:'Update'}} name="DrawerUpdate"  component={DrawerforUpdating} />
             <Drawer.Screen options={{title:'Delete'}} name="DeleteCategory"  component={DeleteCategory} />

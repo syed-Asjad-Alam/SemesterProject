@@ -1,18 +1,27 @@
 import React from "react";
-import { View, Text, TouchableOpacity,StyleSheet,TextInput,Button,Image } from "react-native";
+import { View, Text, TouchableOpacity,StyleSheet,TextInput,Image } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
-import { StackActions } from '@react-navigation/native';
 
 
 
 
-const UpdatingCategory = ({navigation,route}) => {
+const UpdatingCategory = ({route}) => {
 
+
+    //Declarations
     const category = route.params.item
     const catID = route.params.ID
 
+    const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
 
+    const [Categoryname, setCategoryname] = React.useState(category)
+    
+    const [base64,setbase64] = React.useState()
+    const [loader,setloader] = React.useState(true)
+    const [image, setImage] = React.useState()
+
+    //Functions
     const getCategoryImage = async (id) => {
       const response = await fetch(`${FIREBASE_API_ENDPOINT}/Categories/${id}.json`);
       const data = await response.json()
@@ -29,18 +38,11 @@ const UpdatingCategory = ({navigation,route}) => {
   
    
    
-    const FIREBASE_API_ENDPOINT = 'https://fir-9d371-default-rtdb.asia-southeast1.firebasedatabase.app/'
-
-    const [Categoryname, setCategoryname] = React.useState(category)
     
-    const [base64,setbase64] = React.useState()
-    const [loader,setloader] = React.useState(true)
-    const [image, setImage] = React.useState()
 
 
 
     const pickImage = async () => {
-      // No permissions request is necessary for launching the image library
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         quality: 1,
@@ -52,7 +54,7 @@ const UpdatingCategory = ({navigation,route}) => {
         setbase64(base64)
         
   
-        //console.log(image);
+
       }
     }
   
